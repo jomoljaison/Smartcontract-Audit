@@ -1,0 +1,381 @@
+Compilation warnings/errors on /home/nextazy/Documents/Ethereum/SMARTCONTRACT_PLATFORM/SECURITY/solidity_audit/NPXX/routes/upload/Asset-1667222099792.sol:
+Warning: Contract code size exceeds 24576 bytes (a limit introduced in Spurious Dragon). This contract may not be deployable on mainnet. Consider enabling the optimizer (with a low "runs" value!), turning off revert strings, or using libraries.
+    --> /home/nextazy/Documents/Ethereum/SMARTCONTRACT_PLATFORM/SECURITY/solidity_audit/NPXX/routes/upload/Asset-1667222099792.sol:2409:1:
+     |
+2409 | contract AssetContractShared is AssetContract, ReentrancyGuard {
+     | ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: Contract code size exceeds 24576 bytes (a limit introduced in Spurious Dragon). This contract may not be deployable on mainnet. Consider enabling the optimizer (with a low "runs" value!), turning off revert strings, or using libraries.
+    --> routes/upload/Asset-1667222099792.sol:2409:1:
+     |
+2409 | contract AssetContractShared is AssetContract, ReentrancyGuard {
+     | ^ (Relevant source part starts here and spans across multiple lines).
+
+
+[93m
+Contract locking ether found:
+	Contract AssetContractShared (routes/upload/Asset-1667222099792.sol#2409-2663) has payable functions:
+	 - NativeMetaTransaction.executeMetaTransaction(address,bytes,bytes32,bytes32,uint8) (routes/upload/Asset-1667222099792.sol#1340-1376)
+	But does not have a function to withdraw the ether
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#contracts-that-lock-ether[0m
+[93m
+Reentrancy in AssetContract.safeTransferFrom(address,address,uint256,uint256,bytes) (routes/upload/Asset-1667222099792.sol#2146-2163):
+	External calls:
+	- mint(_to,_id,_amount - mintedBalance,_data) (routes/upload/Asset-1667222099792.sol#2156)
+		- IERC1155Receiver(to).onERC1155Received(operator,from,id,amount,data) (routes/upload/Asset-1667222099792.sol#1939-1957)
+	- super.safeTransferFrom(_from,_to,_id,mintedBalance,_data) (routes/upload/Asset-1667222099792.sol#2158)
+		- IERC1155Receiver(to).onERC1155Received(operator,from,id,amount,data) (routes/upload/Asset-1667222099792.sol#1939-1957)
+	State variables written after the call(s):
+	- super.safeTransferFrom(_from,_to,_id,mintedBalance,_data) (routes/upload/Asset-1667222099792.sol#2158)
+		- balances[id][from] = fromBalance - amount (routes/upload/Asset-1667222099792.sol#1609)
+		- balances[id][to] += amount (routes/upload/Asset-1667222099792.sol#1610)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1[0m
+[93m
+ERC1155._doSafeBatchTransferAcceptanceCheck(address,address,address,uint256[],uint256[],bytes).response (routes/upload/Asset-1667222099792.sol#1079) is a local variable never initialized
+ERC1155._doSafeBatchTransferAcceptanceCheck(address,address,address,uint256[],uint256[],bytes).reason (routes/upload/Asset-1667222099792.sol#1084) is a local variable never initialized
+ERC1155Tradable.doSafeTransferAcceptanceCheck(address,address,address,uint256,uint256,bytes).response (routes/upload/Asset-1667222099792.sol#1947) is a local variable never initialized
+ERC1155._doSafeTransferAcceptanceCheck(address,address,address,uint256,uint256,bytes).response (routes/upload/Asset-1667222099792.sol#1057) is a local variable never initialized
+ERC1155Tradable.doSafeBatchTransferAcceptanceCheck(address,address,address,uint256[],uint256[],bytes).reason (routes/upload/Asset-1667222099792.sol#1987) is a local variable never initialized
+ERC1155Tradable.doSafeBatchTransferAcceptanceCheck(address,address,address,uint256[],uint256[],bytes).response (routes/upload/Asset-1667222099792.sol#1980) is a local variable never initialized
+ERC1155._doSafeTransferAcceptanceCheck(address,address,address,uint256,uint256,bytes).reason (routes/upload/Asset-1667222099792.sol#1061) is a local variable never initialized
+ERC1155Tradable.doSafeTransferAcceptanceCheck(address,address,address,uint256,uint256,bytes).reason (routes/upload/Asset-1667222099792.sol#1953) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables[0m
+[93m
+ERC1155._doSafeTransferAcceptanceCheck(address,address,address,uint256,uint256,bytes) (routes/upload/Asset-1667222099792.sol#1048-1067) ignores return value by IERC1155Receiver(to).onERC1155Received(operator,from,id,amount,data) (routes/upload/Asset-1667222099792.sol#1057-1065)
+ERC1155._doSafeBatchTransferAcceptanceCheck(address,address,address,uint256[],uint256[],bytes) (routes/upload/Asset-1667222099792.sol#1069-1090) ignores return value by IERC1155Receiver(to).onERC1155BatchReceived(operator,from,ids,amounts,data) (routes/upload/Asset-1667222099792.sol#1078-1088)
+ERC1155Tradable.doSafeTransferAcceptanceCheck(address,address,address,uint256,uint256,bytes) (routes/upload/Asset-1667222099792.sol#1930-1959) ignores return value by IERC1155Receiver(to).onERC1155Received(operator,from,id,amount,data) (routes/upload/Asset-1667222099792.sol#1939-1957)
+ERC1155Tradable.doSafeBatchTransferAcceptanceCheck(address,address,address,uint256[],uint256[],bytes) (routes/upload/Asset-1667222099792.sol#1963-1993) ignores return value by IERC1155Receiver(to).onERC1155BatchReceived(operator,from,ids,amounts,data) (routes/upload/Asset-1667222099792.sol#1972-1991)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return[0m
+[92m
+ERC1155Tradable.isApprovedForAll(address,address)._owner (routes/upload/Asset-1667222099792.sol#1567) shadows:
+	- Ownable._owner (routes/upload/Asset-1667222099792.sol#121) (state variable)
+AssetContract.setTemplateURI(string)._uri (routes/upload/Asset-1667222099792.sol#2098) shadows:
+	- ERC1155._uri (routes/upload/Asset-1667222099792.sol#676) (state variable)
+AssetContract.setURI(uint256,string)._uri (routes/upload/Asset-1667222099792.sol#2102) shadows:
+	- ERC1155._uri (routes/upload/Asset-1667222099792.sol#676) (state variable)
+AssetContract.setPermanentURI(uint256,string)._uri (routes/upload/Asset-1667222099792.sol#2111) shadows:
+	- ERC1155._uri (routes/upload/Asset-1667222099792.sol#676) (state variable)
+AssetContract.balanceOf(address,uint256)._owner (routes/upload/Asset-1667222099792.sol#2132) shadows:
+	- Ownable._owner (routes/upload/Asset-1667222099792.sol#121) (state variable)
+AssetContract._setURI(uint256,string)._uri (routes/upload/Asset-1667222099792.sol#2267) shadows:
+	- ERC1155._uri (routes/upload/Asset-1667222099792.sol#676) (state variable)
+AssetContract._setPermanentURI(uint256,string)._uri (routes/upload/Asset-1667222099792.sol#2272) shadows:
+	- ERC1155._uri (routes/upload/Asset-1667222099792.sol#676) (state variable)
+AssetContractShared.migrate(AssetContractShared.Ownership[]).owner (routes/upload/Asset-1667222099792.sol#2504) shadows:
+	- Ownable.owner() (routes/upload/Asset-1667222099792.sol#135-137) (function)
+AssetContractShared.setURI(uint256,string)._uri (routes/upload/Asset-1667222099792.sol#2562) shadows:
+	- ERC1155._uri (routes/upload/Asset-1667222099792.sol#676) (state variable)
+AssetContractShared.setPermanentURI(uint256,string)._uri (routes/upload/Asset-1667222099792.sol#2575) shadows:
+	- ERC1155._uri (routes/upload/Asset-1667222099792.sol#676) (state variable)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing[0m
+[92m
+ERC1155Tradable.constructor(string,string,address)._proxyRegistryAddress (routes/upload/Asset-1667222099792.sol#1464) lacks a zero-check on :
+		- proxyRegistryAddress = _proxyRegistryAddress (routes/upload/Asset-1667222099792.sol#1468)
+AssetContractShared.setProxyRegistryAddress(address)._address (routes/upload/Asset-1667222099792.sol#2461) lacks a zero-check on :
+		- proxyRegistryAddress = _address (routes/upload/Asset-1667222099792.sol#2462)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation[0m
+[92m
+ERC1155Tradable._isProxyForUser(address,address) (routes/upload/Asset-1667222099792.sol#1915-1926) has external calls inside a loop: address(proxyRegistry.proxies(_user)) == _address (routes/upload/Asset-1667222099792.sol#1925)
+ERC1155Tradable.doSafeTransferAcceptanceCheck(address,address,address,uint256,uint256,bytes) (routes/upload/Asset-1667222099792.sol#1930-1959) has external calls inside a loop: IERC1155Receiver(to).onERC1155Received(operator,from,id,amount,data) (routes/upload/Asset-1667222099792.sol#1939-1957)
+AssetContractShared.migrate(AssetContractShared.Ownership[]) (routes/upload/Asset-1667222099792.sol#2492-2526) has external calls inside a loop: previousAmount = _migrationTarget.balanceOf(owner,id) (routes/upload/Asset-1667222099792.sol#2511)
+AssetContractShared.migrate(AssetContractShared.Ownership[]) (routes/upload/Asset-1667222099792.sol#2492-2526) has external calls inside a loop: keccak256(bytes)(bytes(_migrationTarget.uri(id))) != keccak256(bytes)(bytes(_migrationTargetTemplateURI)) (routes/upload/Asset-1667222099792.sol#2520-2521)
+AssetContractShared.migrate(AssetContractShared.Ownership[]) (routes/upload/Asset-1667222099792.sol#2492-2526) has external calls inside a loop: _setPermanentURI(id,_migrationTarget.uri(id)) (routes/upload/Asset-1667222099792.sol#2523)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop[0m
+[92m
+Variable 'ERC1155._doSafeTransferAcceptanceCheck(address,address,address,uint256,uint256,bytes).response (routes/upload/Asset-1667222099792.sol#1057)' in ERC1155._doSafeTransferAcceptanceCheck(address,address,address,uint256,uint256,bytes) (routes/upload/Asset-1667222099792.sol#1048-1067) potentially used before declaration: response != IERC1155Receiver(to).onERC1155Received.selector (routes/upload/Asset-1667222099792.sol#1058)
+Variable 'ERC1155._doSafeTransferAcceptanceCheck(address,address,address,uint256,uint256,bytes).reason (routes/upload/Asset-1667222099792.sol#1061)' in ERC1155._doSafeTransferAcceptanceCheck(address,address,address,uint256,uint256,bytes) (routes/upload/Asset-1667222099792.sol#1048-1067) potentially used before declaration: revert(string)(reason) (routes/upload/Asset-1667222099792.sol#1062)
+Variable 'ERC1155._doSafeBatchTransferAcceptanceCheck(address,address,address,uint256[],uint256[],bytes).response (routes/upload/Asset-1667222099792.sol#1079)' in ERC1155._doSafeBatchTransferAcceptanceCheck(address,address,address,uint256[],uint256[],bytes) (routes/upload/Asset-1667222099792.sol#1069-1090) potentially used before declaration: response != IERC1155Receiver(to).onERC1155BatchReceived.selector (routes/upload/Asset-1667222099792.sol#1081)
+Variable 'ERC1155._doSafeBatchTransferAcceptanceCheck(address,address,address,uint256[],uint256[],bytes).reason (routes/upload/Asset-1667222099792.sol#1084)' in ERC1155._doSafeBatchTransferAcceptanceCheck(address,address,address,uint256[],uint256[],bytes) (routes/upload/Asset-1667222099792.sol#1069-1090) potentially used before declaration: revert(string)(reason) (routes/upload/Asset-1667222099792.sol#1085)
+Variable 'ERC1155Tradable.doSafeTransferAcceptanceCheck(address,address,address,uint256,uint256,bytes).response (routes/upload/Asset-1667222099792.sol#1947)' in ERC1155Tradable.doSafeTransferAcceptanceCheck(address,address,address,uint256,uint256,bytes) (routes/upload/Asset-1667222099792.sol#1930-1959) potentially used before declaration: response != IERC1155Receiver(to).onERC1155Received.selector (routes/upload/Asset-1667222099792.sol#1949)
+Variable 'ERC1155Tradable.doSafeTransferAcceptanceCheck(address,address,address,uint256,uint256,bytes).reason (routes/upload/Asset-1667222099792.sol#1953)' in ERC1155Tradable.doSafeTransferAcceptanceCheck(address,address,address,uint256,uint256,bytes) (routes/upload/Asset-1667222099792.sol#1930-1959) potentially used before declaration: revert(string)(reason) (routes/upload/Asset-1667222099792.sol#1954)
+Variable 'ERC1155Tradable.doSafeBatchTransferAcceptanceCheck(address,address,address,uint256[],uint256[],bytes).response (routes/upload/Asset-1667222099792.sol#1980)' in ERC1155Tradable.doSafeBatchTransferAcceptanceCheck(address,address,address,uint256[],uint256[],bytes) (routes/upload/Asset-1667222099792.sol#1963-1993) potentially used before declaration: response != IERC1155Receiver(to).onERC1155BatchReceived.selector (routes/upload/Asset-1667222099792.sol#1982-1983)
+Variable 'ERC1155Tradable.doSafeBatchTransferAcceptanceCheck(address,address,address,uint256[],uint256[],bytes).reason (routes/upload/Asset-1667222099792.sol#1987)' in ERC1155Tradable.doSafeBatchTransferAcceptanceCheck(address,address,address,uint256[],uint256[],bytes) (routes/upload/Asset-1667222099792.sol#1963-1993) potentially used before declaration: revert(string)(reason) (routes/upload/Asset-1667222099792.sol#1988)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#pre-declaration-usage-of-local-variables[0m
+[92m
+Reentrancy in AssetContract._batchMint(address,uint256[],uint256[],bytes) (routes/upload/Asset-1667222099792.sol#2253-2265):
+	External calls:
+	- super._batchMint(_to,_ids,_quantities,_data) (routes/upload/Asset-1667222099792.sol#2259)
+		- IERC1155Receiver(to).onERC1155BatchReceived(operator,from,ids,amounts,data) (routes/upload/Asset-1667222099792.sol#1972-1991)
+	State variables written after the call(s):
+	- _setURI(_ids[i],string(_data)) (routes/upload/Asset-1667222099792.sol#2262)
+		- _tokenURI[_id] = _uri (routes/upload/Asset-1667222099792.sol#2268)
+Reentrancy in AssetContract._mint(address,uint256,uint256,bytes) (routes/upload/Asset-1667222099792.sol#2216-2226):
+	External calls:
+	- super._mint(_to,_id,_quantity,_data) (routes/upload/Asset-1667222099792.sol#2222)
+		- IERC1155Receiver(to).onERC1155Received(operator,from,id,amount,data) (routes/upload/Asset-1667222099792.sol#1939-1957)
+	State variables written after the call(s):
+	- _setURI(_id,string(_data)) (routes/upload/Asset-1667222099792.sol#2224)
+		- _tokenURI[_id] = _uri (routes/upload/Asset-1667222099792.sol#2268)
+Reentrancy in AssetContractShared.migrate(AssetContractShared.Ownership[]) (routes/upload/Asset-1667222099792.sol#2492-2526):
+	External calls:
+	- _mint(owner,id,previousAmount,) (routes/upload/Asset-1667222099792.sol#2517)
+		- IERC1155Receiver(to).onERC1155Received(operator,from,id,amount,data) (routes/upload/Asset-1667222099792.sol#1939-1957)
+	State variables written after the call(s):
+	- _setPermanentURI(id,_migrationTarget.uri(id)) (routes/upload/Asset-1667222099792.sol#2523)
+		- _isPermanentURI[_id] = true (routes/upload/Asset-1667222099792.sol#2280)
+	- _setPermanentURI(id,_migrationTarget.uri(id)) (routes/upload/Asset-1667222099792.sol#2523)
+		- _tokenURI[_id] = _uri (routes/upload/Asset-1667222099792.sol#2268)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2[0m
+[92m
+Reentrancy in AssetContract._batchMint(address,uint256[],uint256[],bytes) (routes/upload/Asset-1667222099792.sol#2253-2265):
+	External calls:
+	- super._batchMint(_to,_ids,_quantities,_data) (routes/upload/Asset-1667222099792.sol#2259)
+		- IERC1155Receiver(to).onERC1155BatchReceived(operator,from,ids,amounts,data) (routes/upload/Asset-1667222099792.sol#1972-1991)
+	Event emitted after the call(s):
+	- URI(_uri,_id) (routes/upload/Asset-1667222099792.sol#2269)
+		- _setURI(_ids[i],string(_data)) (routes/upload/Asset-1667222099792.sol#2262)
+Reentrancy in AssetContract._mint(address,uint256,uint256,bytes) (routes/upload/Asset-1667222099792.sol#2216-2226):
+	External calls:
+	- super._mint(_to,_id,_quantity,_data) (routes/upload/Asset-1667222099792.sol#2222)
+		- IERC1155Receiver(to).onERC1155Received(operator,from,id,amount,data) (routes/upload/Asset-1667222099792.sol#1939-1957)
+	Event emitted after the call(s):
+	- URI(_uri,_id) (routes/upload/Asset-1667222099792.sol#2269)
+		- _setURI(_id,string(_data)) (routes/upload/Asset-1667222099792.sol#2224)
+Reentrancy in AssetContractShared.migrate(AssetContractShared.Ownership[]) (routes/upload/Asset-1667222099792.sol#2492-2526):
+	External calls:
+	- _mint(owner,id,previousAmount,) (routes/upload/Asset-1667222099792.sol#2517)
+		- IERC1155Receiver(to).onERC1155Received(operator,from,id,amount,data) (routes/upload/Asset-1667222099792.sol#1939-1957)
+	Event emitted after the call(s):
+	- PermanentURI(_uri,_id) (routes/upload/Asset-1667222099792.sol#2282)
+		- _setPermanentURI(id,_migrationTarget.uri(id)) (routes/upload/Asset-1667222099792.sol#2523)
+	- URI(_uri,_id) (routes/upload/Asset-1667222099792.sol#2269)
+		- _setPermanentURI(id,_migrationTarget.uri(id)) (routes/upload/Asset-1667222099792.sol#2523)
+Reentrancy in AssetContract.safeTransferFrom(address,address,uint256,uint256,bytes) (routes/upload/Asset-1667222099792.sol#2146-2163):
+	External calls:
+	- mint(_to,_id,_amount - mintedBalance,_data) (routes/upload/Asset-1667222099792.sol#2156)
+		- IERC1155Receiver(to).onERC1155Received(operator,from,id,amount,data) (routes/upload/Asset-1667222099792.sol#1939-1957)
+	- super.safeTransferFrom(_from,_to,_id,mintedBalance,_data) (routes/upload/Asset-1667222099792.sol#2158)
+		- IERC1155Receiver(to).onERC1155Received(operator,from,id,amount,data) (routes/upload/Asset-1667222099792.sol#1939-1957)
+	Event emitted after the call(s):
+	- TransferSingle(operator,from,to,id,amount) (routes/upload/Asset-1667222099792.sol#1612)
+		- super.safeTransferFrom(_from,_to,_id,mintedBalance,_data) (routes/upload/Asset-1667222099792.sol#2158)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3[0m
+[92m
+Address.isContract(address) (routes/upload/Asset-1667222099792.sol#431-441) uses assembly
+	- INLINE ASM (routes/upload/Asset-1667222099792.sol#437-439)
+Address._verifyCallResult(bool,bytes,string) (routes/upload/Asset-1667222099792.sol#594-614) uses assembly
+	- INLINE ASM (routes/upload/Asset-1667222099792.sol#606-609)
+ContextMixin.msgSender() (routes/upload/Asset-1667222099792.sol#1199-1214) uses assembly
+	- INLINE ASM (routes/upload/Asset-1667222099792.sol#1203-1209)
+EIP712Base.getChainId() (routes/upload/Asset-1667222099792.sol#1281-1287) uses assembly
+	- INLINE ASM (routes/upload/Asset-1667222099792.sol#1283-1285)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage[0m
+[92m
+Different versions of Solidity are used:
+	- Version used: ['0.8.0', '^0.8.0']
+	- ^0.8.0 (routes/upload/Asset-1667222099792.sol#14)
+	- ^0.8.0 (routes/upload/Asset-1667222099792.sol#79)
+	- ^0.8.0 (routes/upload/Asset-1667222099792.sol#105)
+	- ^0.8.0 (routes/upload/Asset-1667222099792.sol#178)
+	- ^0.8.0 (routes/upload/Asset-1667222099792.sol#205)
+	- ^0.8.0 (routes/upload/Asset-1667222099792.sol#331)
+	- ^0.8.0 (routes/upload/Asset-1667222099792.sol#385)
+	- ^0.8.0 (routes/upload/Asset-1667222099792.sol#408)
+	- ^0.8.0 (routes/upload/Asset-1667222099792.sol#621)
+	- ^0.8.0 (routes/upload/Asset-1667222099792.sol#651)
+	- ^0.8.0 (routes/upload/Asset-1667222099792.sol#1104)
+	- 0.8.0 (routes/upload/Asset-1667222099792.sol#1196)
+	- 0.8.0 (routes/upload/Asset-1667222099792.sol#1221)
+	- 0.8.0 (routes/upload/Asset-1667222099792.sol#1237)
+	- 0.8.0 (routes/upload/Asset-1667222099792.sol#1312)
+	- 0.8.0 (routes/upload/Asset-1667222099792.sol#1421)
+	- 0.8.0 (routes/upload/Asset-1667222099792.sol#2020)
+	- ^0.8.0 (routes/upload/Asset-1667222099792.sol#2290)
+	- 0.8.0 (routes/upload/Asset-1667222099792.sol#2359)
+	- 0.8.0 (routes/upload/Asset-1667222099792.sol#2400)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#different-pragma-directives-are-used[0m
+[92m
+ReentrancyGuard.nonReentrant() (routes/upload/Asset-1667222099792.sol#60-72) has costly operations inside a loop:
+	- _status = _ENTERED (routes/upload/Asset-1667222099792.sol#65)
+ReentrancyGuard.nonReentrant() (routes/upload/Asset-1667222099792.sol#60-72) has costly operations inside a loop:
+	- _status = _NOT_ENTERED (routes/upload/Asset-1667222099792.sol#71)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop[0m
+[92m
+Address._verifyCallResult(bool,bytes,string) (routes/upload/Asset-1667222099792.sol#594-614) is never used and should be removed
+Address.functionCall(address,bytes) (routes/upload/Asset-1667222099792.sol#484-486) is never used and should be removed
+Address.functionCall(address,bytes,string) (routes/upload/Asset-1667222099792.sol#494-500) is never used and should be removed
+Address.functionCallWithValue(address,bytes,uint256) (routes/upload/Asset-1667222099792.sol#513-519) is never used and should be removed
+Address.functionCallWithValue(address,bytes,uint256,string) (routes/upload/Asset-1667222099792.sol#527-538) is never used and should be removed
+Address.functionDelegateCall(address,bytes) (routes/upload/Asset-1667222099792.sol#573-575) is never used and should be removed
+Address.functionDelegateCall(address,bytes,string) (routes/upload/Asset-1667222099792.sol#583-592) is never used and should be removed
+Address.functionStaticCall(address,bytes) (routes/upload/Asset-1667222099792.sol#546-548) is never used and should be removed
+Address.functionStaticCall(address,bytes,string) (routes/upload/Asset-1667222099792.sol#556-565) is never used and should be removed
+Address.sendValue(address,uint256) (routes/upload/Asset-1667222099792.sol#459-464) is never used and should be removed
+AssetContract._isCreatorOrProxy(uint256,address) (routes/upload/Asset-1667222099792.sol#2228-2235) is never used and should be removed
+AssetContract._origin(uint256) (routes/upload/Asset-1667222099792.sol#2247-2251) is never used and should be removed
+AssetContract._remainingSupply(uint256) (routes/upload/Asset-1667222099792.sol#2237-2244) is never used and should be removed
+AssetContractShared._requireMintable(address,uint256) (routes/upload/Asset-1667222099792.sol#2624-2629) is never used and should be removed
+Context._msgData() (routes/upload/Asset-1667222099792.sol#96-98) is never used and should be removed
+Context._msgSender() (routes/upload/Asset-1667222099792.sol#92-94) is never used and should be removed
+ERC1155._asSingletonArray(uint256) (routes/upload/Asset-1667222099792.sol#1092-1097) is never used and should be removed
+ERC1155._burn(address,uint256,uint256) (routes/upload/Asset-1667222099792.sol#966-984) is never used and should be removed
+ERC1155._burnBatch(address,uint256[],uint256[]) (routes/upload/Asset-1667222099792.sol#993-1017) is never used and should be removed
+ERC1155._doSafeBatchTransferAcceptanceCheck(address,address,address,uint256[],uint256[],bytes) (routes/upload/Asset-1667222099792.sol#1069-1090) is never used and should be removed
+ERC1155._doSafeTransferAcceptanceCheck(address,address,address,uint256,uint256,bytes) (routes/upload/Asset-1667222099792.sol#1048-1067) is never used and should be removed
+ERC1155._mint(address,uint256,uint256,bytes) (routes/upload/Asset-1667222099792.sol#909-925) is never used and should be removed
+ERC1155._mintBatch(address,uint256[],uint256[],bytes) (routes/upload/Asset-1667222099792.sol#936-956) is never used and should be removed
+ERC1155._safeBatchTransferFrom(address,address,uint256[],uint256[],bytes) (routes/upload/Asset-1667222099792.sol#844-873) is never used and should be removed
+ERC1155._safeTransferFrom(address,address,uint256,uint256,bytes) (routes/upload/Asset-1667222099792.sol#809-832) is never used and should be removed
+ERC1155Tradable._beforeMint(uint256,uint256) (routes/upload/Asset-1667222099792.sol#1667) is never used and should be removed
+ERC1155Tradable._origin(uint256) (routes/upload/Asset-1667222099792.sol#1907-1911) is never used and should be removed
+Strings.toHexString(uint256) (routes/upload/Asset-1667222099792.sol#2326-2337) is never used and should be removed
+Strings.toHexString(uint256,uint256) (routes/upload/Asset-1667222099792.sol#2342-2352) is never used and should be removed
+Strings.toString(uint256) (routes/upload/Asset-1667222099792.sol#2301-2321) is never used and should be removed
+TokenIdentifiers.tokenIndex(uint256) (routes/upload/Asset-1667222099792.sol#2387-2389) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code[0m
+[92m
+Pragma version^0.8.0 (routes/upload/Asset-1667222099792.sol#14) allows old versions
+Pragma version^0.8.0 (routes/upload/Asset-1667222099792.sol#79) allows old versions
+Pragma version^0.8.0 (routes/upload/Asset-1667222099792.sol#105) allows old versions
+Pragma version^0.8.0 (routes/upload/Asset-1667222099792.sol#178) allows old versions
+Pragma version^0.8.0 (routes/upload/Asset-1667222099792.sol#205) allows old versions
+Pragma version^0.8.0 (routes/upload/Asset-1667222099792.sol#331) allows old versions
+Pragma version^0.8.0 (routes/upload/Asset-1667222099792.sol#385) allows old versions
+Pragma version^0.8.0 (routes/upload/Asset-1667222099792.sol#408) allows old versions
+Pragma version^0.8.0 (routes/upload/Asset-1667222099792.sol#621) allows old versions
+Pragma version^0.8.0 (routes/upload/Asset-1667222099792.sol#651) allows old versions
+Pragma version^0.8.0 (routes/upload/Asset-1667222099792.sol#1104) allows old versions
+Pragma version0.8.0 (routes/upload/Asset-1667222099792.sol#1196) allows old versions
+Pragma version0.8.0 (routes/upload/Asset-1667222099792.sol#1221) allows old versions
+Pragma version0.8.0 (routes/upload/Asset-1667222099792.sol#1237) allows old versions
+Pragma version0.8.0 (routes/upload/Asset-1667222099792.sol#1312) allows old versions
+Pragma version0.8.0 (routes/upload/Asset-1667222099792.sol#1421) allows old versions
+Pragma version0.8.0 (routes/upload/Asset-1667222099792.sol#2020) allows old versions
+Pragma version^0.8.0 (routes/upload/Asset-1667222099792.sol#2290) allows old versions
+Pragma version0.8.0 (routes/upload/Asset-1667222099792.sol#2359) allows old versions
+Pragma version0.8.0 (routes/upload/Asset-1667222099792.sol#2400) allows old versions
+solc-0.8.0 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity[0m
+[92m
+Low level call in Address.sendValue(address,uint256) (routes/upload/Asset-1667222099792.sol#459-464):
+	- (success) = recipient.call{value: amount}() (routes/upload/Asset-1667222099792.sol#462)
+Low level call in Address.functionCallWithValue(address,bytes,uint256,string) (routes/upload/Asset-1667222099792.sol#527-538):
+	- (success,returndata) = target.call{value: value}(data) (routes/upload/Asset-1667222099792.sol#536)
+Low level call in Address.functionStaticCall(address,bytes,string) (routes/upload/Asset-1667222099792.sol#556-565):
+	- (success,returndata) = target.staticcall(data) (routes/upload/Asset-1667222099792.sol#563)
+Low level call in Address.functionDelegateCall(address,bytes,string) (routes/upload/Asset-1667222099792.sol#583-592):
+	- (success,returndata) = target.delegatecall(data) (routes/upload/Asset-1667222099792.sol#590)
+Low level call in NativeMetaTransaction.executeMetaTransaction(address,bytes,bytes32,bytes32,uint8) (routes/upload/Asset-1667222099792.sol#1340-1376):
+	- (success,returnData) = address(this).call(abi.encodePacked(functionSignature,userAddress)) (routes/upload/Asset-1667222099792.sol#1369-1372)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls[0m
+[92m
+Parameter ERC1155Tradable.totalSupply(uint256)._id (routes/upload/Asset-1667222099792.sol#1560) is not in mixedCase
+Parameter ERC1155Tradable.isApprovedForAll(address,address)._owner (routes/upload/Asset-1667222099792.sol#1567) is not in mixedCase
+Parameter ERC1155Tradable.isApprovedForAll(address,address)._operator (routes/upload/Asset-1667222099792.sol#1567) is not in mixedCase
+Parameter ERC1155Tradable.mint(address,uint256,uint256,bytes)._to (routes/upload/Asset-1667222099792.sol#1677) is not in mixedCase
+Parameter ERC1155Tradable.mint(address,uint256,uint256,bytes)._id (routes/upload/Asset-1667222099792.sol#1678) is not in mixedCase
+Parameter ERC1155Tradable.mint(address,uint256,uint256,bytes)._quantity (routes/upload/Asset-1667222099792.sol#1679) is not in mixedCase
+Parameter ERC1155Tradable.mint(address,uint256,uint256,bytes)._data (routes/upload/Asset-1667222099792.sol#1680) is not in mixedCase
+Parameter ERC1155Tradable.batchMint(address,uint256[],uint256[],bytes)._to (routes/upload/Asset-1667222099792.sol#1693) is not in mixedCase
+Parameter ERC1155Tradable.batchMint(address,uint256[],uint256[],bytes)._ids (routes/upload/Asset-1667222099792.sol#1694) is not in mixedCase
+Parameter ERC1155Tradable.batchMint(address,uint256[],uint256[],bytes)._quantities (routes/upload/Asset-1667222099792.sol#1695) is not in mixedCase
+Parameter ERC1155Tradable.batchMint(address,uint256[],uint256[],bytes)._data (routes/upload/Asset-1667222099792.sol#1696) is not in mixedCase
+Parameter ERC1155Tradable.burn(address,uint256,uint256)._from (routes/upload/Asset-1667222099792.sol#1708) is not in mixedCase
+Parameter ERC1155Tradable.burn(address,uint256,uint256)._id (routes/upload/Asset-1667222099792.sol#1709) is not in mixedCase
+Parameter ERC1155Tradable.burn(address,uint256,uint256)._quantity (routes/upload/Asset-1667222099792.sol#1710) is not in mixedCase
+Parameter ERC1155Tradable.batchBurn(address,uint256[],uint256[])._from (routes/upload/Asset-1667222099792.sol#1722) is not in mixedCase
+Parameter ERC1155Tradable.batchBurn(address,uint256[],uint256[])._ids (routes/upload/Asset-1667222099792.sol#1723) is not in mixedCase
+Parameter ERC1155Tradable.batchBurn(address,uint256[],uint256[])._quantities (routes/upload/Asset-1667222099792.sol#1724) is not in mixedCase
+Parameter ERC1155Tradable.exists(uint256)._id (routes/upload/Asset-1667222099792.sol#1734) is not in mixedCase
+Parameter AssetContract.setTemplateURI(string)._uri (routes/upload/Asset-1667222099792.sol#2098) is not in mixedCase
+Parameter AssetContract.setURI(uint256,string)._id (routes/upload/Asset-1667222099792.sol#2102) is not in mixedCase
+Parameter AssetContract.setURI(uint256,string)._uri (routes/upload/Asset-1667222099792.sol#2102) is not in mixedCase
+Parameter AssetContract.setPermanentURI(uint256,string)._id (routes/upload/Asset-1667222099792.sol#2111) is not in mixedCase
+Parameter AssetContract.setPermanentURI(uint256,string)._uri (routes/upload/Asset-1667222099792.sol#2111) is not in mixedCase
+Parameter AssetContract.isPermanentURI(uint256)._id (routes/upload/Asset-1667222099792.sol#2120) is not in mixedCase
+Parameter AssetContract.uri(uint256)._id (routes/upload/Asset-1667222099792.sol#2124) is not in mixedCase
+Parameter AssetContract.balanceOf(address,uint256)._owner (routes/upload/Asset-1667222099792.sol#2132) is not in mixedCase
+Parameter AssetContract.balanceOf(address,uint256)._id (routes/upload/Asset-1667222099792.sol#2132) is not in mixedCase
+Parameter AssetContract.safeTransferFrom(address,address,uint256,uint256,bytes)._from (routes/upload/Asset-1667222099792.sol#2147) is not in mixedCase
+Parameter AssetContract.safeTransferFrom(address,address,uint256,uint256,bytes)._to (routes/upload/Asset-1667222099792.sol#2148) is not in mixedCase
+Parameter AssetContract.safeTransferFrom(address,address,uint256,uint256,bytes)._id (routes/upload/Asset-1667222099792.sol#2149) is not in mixedCase
+Parameter AssetContract.safeTransferFrom(address,address,uint256,uint256,bytes)._amount (routes/upload/Asset-1667222099792.sol#2150) is not in mixedCase
+Parameter AssetContract.safeTransferFrom(address,address,uint256,uint256,bytes)._data (routes/upload/Asset-1667222099792.sol#2151) is not in mixedCase
+Parameter AssetContract.safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)._from (routes/upload/Asset-1667222099792.sol#2166) is not in mixedCase
+Parameter AssetContract.safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)._to (routes/upload/Asset-1667222099792.sol#2167) is not in mixedCase
+Parameter AssetContract.safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)._ids (routes/upload/Asset-1667222099792.sol#2168) is not in mixedCase
+Parameter AssetContract.safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)._amounts (routes/upload/Asset-1667222099792.sol#2169) is not in mixedCase
+Parameter AssetContract.safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)._data (routes/upload/Asset-1667222099792.sol#2170) is not in mixedCase
+Parameter AssetContract.burn(address,uint256,uint256)._from (routes/upload/Asset-1667222099792.sol#2194) is not in mixedCase
+Parameter AssetContract.burn(address,uint256,uint256)._id (routes/upload/Asset-1667222099792.sol#2195) is not in mixedCase
+Parameter AssetContract.burn(address,uint256,uint256)._quantity (routes/upload/Asset-1667222099792.sol#2196) is not in mixedCase
+Parameter AssetContract.batchBurn(address,uint256[],uint256[])._from (routes/upload/Asset-1667222099792.sol#2203) is not in mixedCase
+Parameter AssetContract.batchBurn(address,uint256[],uint256[])._ids (routes/upload/Asset-1667222099792.sol#2204) is not in mixedCase
+Parameter AssetContract.batchBurn(address,uint256[],uint256[])._quantities (routes/upload/Asset-1667222099792.sol#2205) is not in mixedCase
+Parameter TokenIdentifiers.tokenMaxSupply(uint256)._id (routes/upload/Asset-1667222099792.sol#2383) is not in mixedCase
+Parameter TokenIdentifiers.tokenIndex(uint256)._id (routes/upload/Asset-1667222099792.sol#2387) is not in mixedCase
+Parameter TokenIdentifiers.tokenCreator(uint256)._id (routes/upload/Asset-1667222099792.sol#2391) is not in mixedCase
+Parameter AssetContractShared.setProxyRegistryAddress(address)._address (routes/upload/Asset-1667222099792.sol#2461) is not in mixedCase
+Parameter AssetContractShared.addSharedProxyAddress(address)._address (routes/upload/Asset-1667222099792.sol#2468) is not in mixedCase
+Parameter AssetContractShared.removeSharedProxyAddress(address)._address (routes/upload/Asset-1667222099792.sol#2475) is not in mixedCase
+Parameter AssetContractShared.migrate(AssetContractShared.Ownership[])._ownerships (routes/upload/Asset-1667222099792.sol#2492) is not in mixedCase
+Parameter AssetContractShared.mint(address,uint256,uint256,bytes)._to (routes/upload/Asset-1667222099792.sol#2529) is not in mixedCase
+Parameter AssetContractShared.mint(address,uint256,uint256,bytes)._id (routes/upload/Asset-1667222099792.sol#2530) is not in mixedCase
+Parameter AssetContractShared.mint(address,uint256,uint256,bytes)._quantity (routes/upload/Asset-1667222099792.sol#2531) is not in mixedCase
+Parameter AssetContractShared.mint(address,uint256,uint256,bytes)._data (routes/upload/Asset-1667222099792.sol#2532) is not in mixedCase
+Parameter AssetContractShared.batchMint(address,uint256[],uint256[],bytes)._to (routes/upload/Asset-1667222099792.sol#2538) is not in mixedCase
+Parameter AssetContractShared.batchMint(address,uint256[],uint256[],bytes)._ids (routes/upload/Asset-1667222099792.sol#2539) is not in mixedCase
+Parameter AssetContractShared.batchMint(address,uint256[],uint256[],bytes)._quantities (routes/upload/Asset-1667222099792.sol#2540) is not in mixedCase
+Parameter AssetContractShared.batchMint(address,uint256[],uint256[],bytes)._data (routes/upload/Asset-1667222099792.sol#2541) is not in mixedCase
+Parameter AssetContractShared.setURI(uint256,string)._id (routes/upload/Asset-1667222099792.sol#2562) is not in mixedCase
+Parameter AssetContractShared.setURI(uint256,string)._uri (routes/upload/Asset-1667222099792.sol#2562) is not in mixedCase
+Parameter AssetContractShared.setPermanentURI(uint256,string)._id (routes/upload/Asset-1667222099792.sol#2575) is not in mixedCase
+Parameter AssetContractShared.setPermanentURI(uint256,string)._uri (routes/upload/Asset-1667222099792.sol#2575) is not in mixedCase
+Parameter AssetContractShared.setCreator(uint256,address)._id (routes/upload/Asset-1667222099792.sol#2590) is not in mixedCase
+Parameter AssetContractShared.setCreator(uint256,address)._to (routes/upload/Asset-1667222099792.sol#2590) is not in mixedCase
+Parameter AssetContractShared.creator(uint256)._id (routes/upload/Asset-1667222099792.sol#2603) is not in mixedCase
+Parameter AssetContractShared.maxSupply(uint256)._id (routes/upload/Asset-1667222099792.sol#2615) is not in mixedCase
+Variable AssetContractShared._creatorOverride (routes/upload/Asset-1667222099792.sol#2424) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions[0m
+[92m
+TokenIdentifiers.ADDRESS_BITS (routes/upload/Asset-1667222099792.sol#2375) is never used in TokenIdentifiers (routes/upload/Asset-1667222099792.sol#2374-2394)
+AssetContract.TOKEN_SUPPLY_CAP (routes/upload/Asset-1667222099792.sol#2030) is never used in AssetContractShared (routes/upload/Asset-1667222099792.sol#2409-2663)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-state-variable[0m
+[92m
+renounceOwnership() should be declared external:
+	- Ownable.renounceOwnership() (routes/upload/Asset-1667222099792.sol#154-156)
+transferOwnership(address) should be declared external:
+	- Ownable.transferOwnership(address) (routes/upload/Asset-1667222099792.sol#162-165)
+uri(uint256) should be declared external:
+	- AssetContract.uri(uint256) (routes/upload/Asset-1667222099792.sol#2124-2130)
+	- ERC1155.uri(uint256) (routes/upload/Asset-1667222099792.sol#705-707)
+balanceOfBatch(address[],uint256[]) should be declared external:
+	- ERC1155.balanceOfBatch(address[],uint256[]) (routes/upload/Asset-1667222099792.sol#728-744)
+	- ERC1155Tradable.balanceOfBatch(address[],uint256[]) (routes/upload/Asset-1667222099792.sol#1534-1553)
+setApprovalForAll(address,bool) should be declared external:
+	- ERC1155.setApprovalForAll(address,bool) (routes/upload/Asset-1667222099792.sol#749-754)
+safeBatchTransferFrom(address,address,uint256[],uint256[],bytes) should be declared external:
+	- AssetContract.safeBatchTransferFrom(address,address,uint256[],uint256[],bytes) (routes/upload/Asset-1667222099792.sol#2165-2179)
+	- ERC1155.safeBatchTransferFrom(address,address,uint256[],uint256[],bytes) (routes/upload/Asset-1667222099792.sol#783-795)
+	- ERC1155Tradable.safeBatchTransferFrom(address,address,uint256[],uint256[],bytes) (routes/upload/Asset-1667222099792.sol#1620-1660)
+getNonce(address) should be declared external:
+	- NativeMetaTransaction.getNonce(address) (routes/upload/Asset-1667222099792.sol#1394-1396)
+batchMint(address,uint256[],uint256[],bytes) should be declared external:
+	- AssetContractShared.batchMint(address,uint256[],uint256[],bytes) (routes/upload/Asset-1667222099792.sol#2537-2550)
+	- ERC1155Tradable.batchMint(address,uint256[],uint256[],bytes) (routes/upload/Asset-1667222099792.sol#1692-1699)
+exists(uint256) should be declared external:
+	- ERC1155Tradable.exists(uint256) (routes/upload/Asset-1667222099792.sol#1734-1736)
+openSeaVersion() should be declared external:
+	- AssetContract.openSeaVersion() (routes/upload/Asset-1667222099792.sol#2074-2076)
+supportsFactoryInterface() should be declared external:
+	- AssetContract.supportsFactoryInterface() (routes/upload/Asset-1667222099792.sol#2094-2096)
+setURI(uint256,string) should be declared external:
+	- AssetContract.setURI(uint256,string) (routes/upload/Asset-1667222099792.sol#2102-2109)
+	- AssetContractShared.setURI(uint256,string) (routes/upload/Asset-1667222099792.sol#2562-2570)
+setPermanentURI(uint256,string) should be declared external:
+	- AssetContract.setPermanentURI(uint256,string) (routes/upload/Asset-1667222099792.sol#2111-2118)
+	- AssetContractShared.setPermanentURI(uint256,string) (routes/upload/Asset-1667222099792.sol#2575-2583)
+setProxyRegistryAddress(address) should be declared external:
+	- AssetContractShared.setProxyRegistryAddress(address) (routes/upload/Asset-1667222099792.sol#2461-2463)
+addSharedProxyAddress(address) should be declared external:
+	- AssetContractShared.addSharedProxyAddress(address) (routes/upload/Asset-1667222099792.sol#2468-2470)
+removeSharedProxyAddress(address) should be declared external:
+	- AssetContractShared.removeSharedProxyAddress(address) (routes/upload/Asset-1667222099792.sol#2475-2480)
+disableMigrate() should be declared external:
+	- AssetContractShared.disableMigrate() (routes/upload/Asset-1667222099792.sol#2485-2487)
+migrate(AssetContractShared.Ownership[]) should be declared external:
+	- AssetContractShared.migrate(AssetContractShared.Ownership[]) (routes/upload/Asset-1667222099792.sol#2492-2526)
+setCreator(uint256,address) should be declared external:
+	- AssetContractShared.setCreator(uint256,address) (routes/upload/Asset-1667222099792.sol#2590-2597)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external[0m
+/home/nextazy/Documents/Ethereum/SMARTCONTRACT_PLATFORM/SECURITY/solidity_audit/NPXX/routes/upload/Asset-1667222099792.sol analyzed (22 contracts with 80 detectors), 198 result(s) found

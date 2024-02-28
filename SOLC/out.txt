@@ -1,0 +1,14 @@
+Warning: Function state mutability can be restricted to pure
+  --> TestSlither.sol:19:5:
+   |
+19 |     function slither_test_pass()public view returns (bool)
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: Function state mutability can be restricted to pure
+  --> TestSlither.sol:24:5:
+   |
+24 |     function slither_test_fails()public view returns (bool)
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+

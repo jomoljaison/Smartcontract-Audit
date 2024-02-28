@@ -1,0 +1,12 @@
+ nextazy
+entered into folder 
+folder is /home/nextazy/Documents/Ethereum/SMARTCONTRACT_PLATFORM/SECURITY/solidity_audit/NPXX/routes/upload
+Latest file is  /home/nextazy/Documents/Ethereum/SMARTCONTRACT_PLATFORM/SECURITY/solidity_audit/NPXX/routes/upload/nft.sol
+solium performing 
+[4m
+routes/upload/nft.sol
+[24m[1m  54:29  [22m  [31merror  [39m  Syntax error: unexpected token i    [3m[23m
+
+[31m✖ [39m[31m1 error[39m[31m found.
+
+[39mBye for now
